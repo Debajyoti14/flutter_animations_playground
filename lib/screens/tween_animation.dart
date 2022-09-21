@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_themes_custom_painter/widgets/custom_text.dart';
 
@@ -11,11 +9,11 @@ class TweenAnimationExample extends StatefulWidget {
 }
 
 class _TweenAnimationExampleState extends State<TweenAnimationExample> {
-  var _angle = 0.0;
+  var _scale = 1.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
@@ -28,23 +26,29 @@ class _TweenAnimationExampleState extends State<TweenAnimationExample> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0, end: _angle),
-              duration: Duration(seconds: 1),
-              child: CustomText('🍑', size: 120),
-              builder: (context, value, child) {
-                return Transform.rotate(angle: value,
-                child: child,);
-              }),
-              SizedBox(height: 20,),
-              Slider.adaptive(value: _angle, 
-              max: 180,
-              min: 0,
-              onChanged: (value){
-                setState(() {
-                _angle = value;
-                  
-                });
-              })
+                tween: Tween(begin: 1, end: _scale),
+                duration: Duration(seconds: 1),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: CustomText('🍑', size: 50)),
+                builder: (context, value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: child,
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            Slider.adaptive(
+                value: _scale,
+                max: 5,
+                min: 1,
+                onChanged: (value) {
+                  setState(() {
+                    _scale = value;
+                  });
+                })
           ],
         ),
       ),
